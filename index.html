@@ -25,7 +25,7 @@
       <a href="#services">Services</a>
       <a href="#portfolio">Portfolio</a>
       <a href="#area">Area</a>
-      <a href="#instagram">Instagram</a>
+      <a href="#enquiry">Enquiry</a>
       <a href="#quote" class="nav-cta">Get a quote</a>
     </nav>
     <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
@@ -132,6 +132,25 @@
           <span>Photo coming soon</span>
         </div>
       </div>
+
+      <div class="portfolio-social">
+        <div>
+          <h3 class="portfolio-social-title">More on Instagram</h3>
+          <p class="section-sub portfolio-social-sub">Before-and-afters and job updates, posted as work gets finished.</p>
+          <div class="social-links">
+            <a class="btn btn-primary" href="https://instagram.com/itahandyman" target="_blank" rel="noopener">Instagram · @itahandyman</a>
+            <a class="btn btn-ghost" href="https://facebook.com/itahandyman" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+        <div class="instagram-grid" aria-hidden="true">
+          <div class="ig-tile"></div>
+          <div class="ig-tile"></div>
+          <div class="ig-tile"></div>
+          <div class="ig-tile"></div>
+          <div class="ig-tile"></div>
+          <div class="ig-tile"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -151,28 +170,6 @@
     </div>
   </section>
 
-  <!-- SOCIAL -->
-  <section class="instagram" id="instagram">
-    <div class="wrap instagram-inner">
-      <div>
-        <h2 class="section-title">Follow the work</h2>
-        <p class="section-sub">Before-and-afters, job updates and the odd disaster story — on Instagram and Facebook.</p>
-        <div class="social-links">
-          <a class="btn btn-primary" href="https://instagram.com/itahandyman" target="_blank" rel="noopener">Instagram · @itahandyman</a>
-          <a class="btn btn-ghost" href="https://facebook.com/itahandyman" target="_blank" rel="noopener">Facebook</a>
-        </div>
-      </div>
-      <div class="instagram-grid" aria-hidden="true">
-        <div class="ig-tile"></div>
-        <div class="ig-tile"></div>
-        <div class="ig-tile"></div>
-        <div class="ig-tile"></div>
-        <div class="ig-tile"></div>
-        <div class="ig-tile"></div>
-      </div>
-    </div>
-  </section>
-
   <!-- QUOTE / CONTACT -->
   <section class="quote" id="quote">
     <div class="wrap quote-inner">
@@ -184,6 +181,13 @@
           <div class="quote-direct-actions">
             <a class="btn btn-ghost" href="https://wa.me/447741755413" target="_blank" rel="noopener">WhatsApp: 07741 755413</a>
             <a class="btn btn-ghost" href="mailto:itahandyman@outlook.com">Email: itahandyman@outlook.com</a>
+          </div>
+        </div>
+        <div class="quote-direct profiles">
+          <p class="quote-direct-label">Also listed on</p>
+          <div class="quote-direct-actions">
+            <a class="btn btn-ghost" href="https://www.airtasker.com/" target="_blank" rel="noopener">Airtasker</a>
+            <a class="btn btn-ghost" href="https://www.mybuilder.com/" target="_blank" rel="noopener">MyBuilder</a>
           </div>
         </div>
       </div>
@@ -214,6 +218,32 @@
           <button type="button" class="btn btn-ghost btn-full" id="q-submit-email">Send via Email</button>
         </div>
         <p class="quote-status" id="quote-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- WEBSITE ENQUIRY (plain form, posts straight to Formspree — no JavaScript involved) -->
+  <section class="enquiry" id="enquiry">
+    <div class="wrap enquiry-inner">
+      <div>
+        <h2 class="section-title">Send a website enquiry</h2>
+        <p class="section-sub">A simple, no-frills form — this one emails straight through, even if WhatsApp or your browser is playing up.</p>
+      </div>
+      <form class="enquiry-form" action="https://formspree.io/f/xojozyeo" method="POST">
+        <input type="hidden" name="_subject" value="New website enquiry — itahandyman.com">
+        <label for="e-name">Name</label>
+        <input type="text" id="e-name" name="name" placeholder="Your name" required>
+
+        <label for="e-contact">Phone or email</label>
+        <input type="text" id="e-contact" name="contact" placeholder="Best way to reach you" required>
+
+        <label for="e-message">Message</label>
+        <textarea id="e-message" name="message" rows="4" placeholder="What do you need doing?" required></textarea>
+
+        <!-- Honeypot: hidden from real visitors, bots often fill it in — Formspree silently drops the submission if it's filled -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <button type="submit" class="btn btn-primary btn-full">Send Website Enquiry</button>
       </form>
     </div>
   </section>

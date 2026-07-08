@@ -198,7 +198,10 @@ section{ padding: 88px 0; }
 /* ============================================
    Instagram
    ============================================ */
-.instagram-inner{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center; }
+.instagram-inner, .portfolio-social{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center; }
+.portfolio-social{ margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--stone-dim); }
+.portfolio-social-title{ font-size: 1.4rem; margin-bottom: 8px; }
+.portfolio-social-sub{ margin-bottom: 22px; }
 .social-links{ display:flex; flex-wrap:wrap; gap: 14px; }
 .instagram-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .ig-tile{
@@ -221,6 +224,7 @@ section{ padding: 88px 0; }
 }
 .quote-direct-label{ font-weight: 600; margin-bottom: 12px; }
 .quote-direct-actions{ display:flex; flex-wrap:wrap; gap: 12px; }
+.quote-direct.profiles{ margin-top: 20px; padding-top: 20px; }
 
 .quote-form{
   display:grid; gap: 14px;
@@ -238,6 +242,24 @@ section{ padding: 88px 0; }
 .quote-form textarea{ resize: vertical; }
 .quote-form-actions{ display:grid; gap: 10px; margin-top: 6px; }
 .quote-status{ font-size: .9rem; color: var(--green); margin: 4px 0 0; min-height: 1.2em; }
+
+/* ============================================
+   Website Enquiry (plain Formspree form)
+   ============================================ */
+.enquiry{ background: var(--stone-dim); }
+.enquiry-inner{ display:grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items:center; }
+.enquiry-form{
+  display:grid; gap: 14px;
+  background: var(--white); padding: 32px; border-radius: var(--radius-card);
+}
+.enquiry-form label{ font-weight: 600; font-size: .9rem; margin-bottom: -8px; }
+.enquiry-form input, .enquiry-form textarea{
+  font-family: var(--font-body); font-size: 1rem;
+  padding: 12px 14px; border-radius: 8px; border: 1.5px solid var(--stone-dim);
+  background: var(--white); color: var(--slate); width: 100%;
+}
+.enquiry-form input:focus, .enquiry-form textarea:focus{ border-color: var(--green); outline: none; }
+.enquiry-form textarea{ resize: vertical; }
 
 /* ============================================
    Footer
@@ -258,7 +280,7 @@ section{ padding: 88px 0; }
   .hero-arch{ order:-1; height: 220px; }
   .service-grid{ grid-template-columns: repeat(2, 1fr); }
   .portfolio-grid{ grid-template-columns: repeat(2, 1fr); }
-  .instagram-inner{ grid-template-columns: 1fr; }
+  .instagram-inner, .portfolio-social, .enquiry-inner{ grid-template-columns: 1fr; }
   .quote-inner{ grid-template-columns: 1fr; }
 }
 
