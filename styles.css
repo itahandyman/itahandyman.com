@@ -199,6 +199,7 @@ section{ padding: 88px 0; }
    Instagram
    ============================================ */
 .instagram-inner{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center; }
+.social-links{ display:flex; flex-wrap:wrap; gap: 14px; }
 .instagram-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .ig-tile{
   aspect-ratio: 1; border-radius: 14px;
@@ -234,6 +235,7 @@ section{ padding: 88px 0; }
   border-color: var(--green); outline: none;
 }
 .quote-form textarea{ resize: vertical; }
+.quote-status{ font-size: .9rem; color: var(--green); margin: 4px 0 0; min-height: 1.2em; }
 
 /* ============================================
    Footer
