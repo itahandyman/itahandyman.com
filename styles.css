@@ -6,10 +6,15 @@
   --stone-dim:    #E4E0D6;   /* muted stone for section bands */
   --slate:        #20242A;   /* charcoal — primary text, matches logo */
   --slate-soft:   #565B60;   /* secondary text */
+  --slate-light:  #CFCFCF;   /* light grey — matches the "t" in the logo */
   --green:        #0E5C3F;   /* deep Colosseum-green */
   --green-dim:    #0E5C3F1a;
   --red:          #A3283A;   /* brick red */
   --red-dim:      #A3283A1a;
+  --whatsapp:     #25D366;   /* WhatsApp brand green — kept distinct from site green */
+  --whatsapp-dark:#1DA851;
+  --amber:        #C9781E;   /* website-form accent — distinct from WhatsApp/email */
+  --amber-dark:   #A9630F;
   --white:        #FFFFFF;
 
   --font-display: 'Zilla Slab', Georgia, serif;
@@ -19,16 +24,36 @@
   --arch-radius: 300px 300px 0 0;
 
   --wrap: 1120px;
+  --base-font-size: 106%; /* larger-than-default baseline for readability */
 }
 
 *, *::before, *::after{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
+html{ scroll-behavior: smooth; font-size: var(--base-font-size); }
+html[data-text-size="lg"]{ font-size: calc(var(--base-font-size) * 1.14); }
+html[data-text-size="xl"]{ font-size: calc(var(--base-font-size) * 1.28); }
+
+/* High-contrast mode */
+html[data-contrast="high"]{
+  --stone:      #FFFFFF;
+  --stone-dim:  #E7E7E7;
+  --slate:      #000000;
+  --slate-soft: #1A1A1A;
+  --slate-light:#4A4A4A;
+  --green:      #064A30;
+  --red:        #7A1524;
+}
+html[data-contrast="high"] a,
+html[data-contrast="high"] .btn-ghost{ text-decoration: underline; }
+html[data-contrast="high"] .btn{ border-width: 2.5px; }
+html[data-contrast="high"] :focus-visible{ outline-width: 4px; }
+
 body{
   margin: 0;
   background: var(--stone);
   color: var(--slate);
   font-family: var(--font-body);
-  line-height: 1.55;
+  line-height: 1.6;
+  font-size: 1.06rem;
   -webkit-font-smoothing: antialiased;
 }
 img{ max-width: 100%; display:block; }
@@ -54,22 +79,35 @@ h1,h2,h3{ font-family: var(--font-display); margin: 0 0 .5em; line-height: 1.1; 
    Buttons
    ============================================ */
 .btn{
-  display:inline-flex; align-items:center; justify-content:center;
+  display:inline-flex; align-items:center; justify-content:center; gap: 9px;
   padding: 14px 28px;
+  min-height: 48px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: .98rem;
+  font-size: 1rem;
   border: 2px solid transparent;
   cursor: pointer;
   transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
 }
 .btn:hover{ transform: translateY(-2px); }
+.btn:disabled{ opacity: .7; cursor: default; transform:none; }
 .btn-primary{ background: var(--green); color: var(--white); }
 .btn-primary:hover{ background: #0a4a32; }
 .btn-ghost{ background: transparent; border-color: var(--slate); color: var(--slate); }
 .btn-ghost:hover{ background: var(--slate); color: var(--white); }
-.btn-small{ padding: 10px 20px; font-size: .9rem; }
+.btn-small{ padding: 10px 20px; font-size: .92rem; min-height: 40px; }
 .btn-full{ width: 100%; }
+.btn-icon{ width: 20px; height: 20px; flex: none; }
+
+/* Channel-specific buttons: distinct color + icon per contact method */
+.btn-whatsapp{ background: var(--whatsapp); color: var(--white); }
+.btn-whatsapp:hover{ background: var(--whatsapp-dark); }
+.btn-email{ background: transparent; border-color: var(--slate-soft); color: var(--slate); }
+.btn-email:hover{ background: var(--slate); border-color: var(--slate); color: var(--white); }
+.btn-webform{ background: var(--amber); color: var(--white); }
+.btn-webform:hover{ background: var(--amber-dark); }
+.btn-callnow{ background: var(--slate); color: var(--white); }
+.btn-callnow:hover{ background: #12151a; }
 
 /* ============================================
    Header
@@ -80,14 +118,49 @@ h1,h2,h3{ font-family: var(--font-display); margin: 0 0 .5em; line-height: 1.1; 
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--stone-dim);
 }
+
+/* Utility bar: call, text size, contrast, language */
+.utility-bar{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  gap: 10px 18px;
+  padding: 8px 0;
+  font-size: .85rem;
+  border-bottom: 1px solid var(--stone-dim);
+}
+.util-call{
+  display:inline-flex; align-items:center; gap:6px;
+  font-weight:700; color: var(--slate);
+}
+.util-call .btn-icon{ width:16px; height:16px; color: var(--green); }
+.utility-controls{ display:flex; align-items:center; gap: 16px; flex-wrap:wrap; }
+.util-group{ display:inline-flex; align-items:center; gap:6px; }
+.util-label{ font-size:.78rem; color: var(--slate-soft); margin-right:2px; }
+.util-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width: 34px; min-height: 34px; padding: 0 8px;
+  border-radius: 8px; border: 1.5px solid var(--slate-soft);
+  background: transparent; color: var(--slate);
+  font-weight:700; font-size:.85rem; cursor:pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.util-btn:hover{ background: var(--slate); color: var(--white); }
+.util-btn[aria-pressed="true"], .util-btn.is-active{ background: var(--green); border-color: var(--green); color: var(--white); }
+.util-btn .btn-icon{ width:16px; height:16px; }
+.lang-group .util-btn{ min-width: 40px; }
+
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
   padding-top: 14px; padding-bottom: 14px;
 }
 .brand{ display:flex; align-items:center; gap:10px; }
 .brand-mark{ width: 42px; height: 42px; object-fit: contain; }
-.brand-name{ font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; letter-spacing: .2px; }
+.brand-name{ font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; letter-spacing: .2px; }
 .brand-name em{ font-style: normal; color: var(--green); }
+/* Letters coloured to match the Italian-flag logo mark: I green, t light grey, a red */
+.brand-i{ color: var(--green); }
+.brand-t{ color: var(--slate-light); }
+.brand-a{ color: var(--red); }
+.site-footer .brand-t{ color: #ffffffb0; }
 
 .site-nav{ display:flex; align-items:center; gap: 28px; }
 .site-nav a{ font-weight: 500; color: var(--slate-soft); font-size: .95rem; }
@@ -242,6 +315,14 @@ section{ padding: 88px 0; }
 .quote-form textarea{ resize: vertical; }
 .quote-form-actions{ display:grid; gap: 10px; margin-top: 6px; }
 .quote-status{ font-size: .9rem; color: var(--green); margin: 4px 0 0; min-height: 1.2em; }
+.quote-status.is-error{ color: var(--red); }
+
+/* Formspree AJAX library feedback (field errors + form-level success/error) */
+.field-error{ font-size: .82rem; color: var(--red); margin-top: -10px; }
+.field-error:empty{ display: none; }
+.fs-success{ color: var(--green); }
+.fs-error{ color: var(--red); }
+.fs-success:empty, .fs-error:empty{ display: none; }
 
 /* ============================================
    Website Enquiry (plain Formspree form)
@@ -297,4 +378,6 @@ section{ padding: 88px 0; }
   .service-grid{ grid-template-columns: 1fr; }
   .portfolio-grid{ grid-template-columns: 1fr 1fr; }
   section{ padding: 56px 0; }
+  .utility-bar{ justify-content:center; text-align:center; }
+  .util-label{ display:none; }
 }

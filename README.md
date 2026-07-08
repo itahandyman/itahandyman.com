@@ -60,26 +60,41 @@ Then back in **Settings → Pages** on GitHub:
 
 - **WhatsApp number**: it's already set to `07741 755413` in both `index.html` (the direct link) and `script.js` (the `WHATSAPP_NUMBER` constant). If it ever changes, update both.
 
+- **Email address**: it's `info@itahandyman.com`, set in `index.html` (the mailto links) and in `script.js` (the `CONTACT_EMAIL` constant). If it ever changes, update both.
+
 - **Instagram**: the button links to `instagram.com/itahandyman`. The six coloured tiles next to it are decorative placeholders (Instagram doesn't allow a free live embed without their API) — you can leave them as a visual, or later swap them for screenshots of your actual posts.
 
-## Email backup for the quote form
+## Formspree (the "Send via Website Form" button and the Enquiry section)
 
-The quote form does two things when someone submits it: opens WhatsApp with the message ready to send, **and** emails you a copy via [Formspree](https://formspree.io) — so you get a lead even if someone fills the form but doesn't follow through on the WhatsApp message.
+There are three separate ways to submit the quote form — WhatsApp, Email, and a dedicated **Send via Website Form** button — plus the standalone "Send a website enquiry" section further down the page. Both go to the same [Formspree](https://formspree.io) form (`https://formspree.io/f/xojozyeo`), which forwards submissions to your email, but each uses a different integration recommended by Formspree for how it's built:
 
-To switch this on:
+- **"Send a website enquiry"** is a plain HTML `<form action="https://formspree.io/f/xojozyeo" method="POST">` — no JavaScript involved, so it works even if a visitor's browser blocks scripts.
+- **"Send via Website Form"** (in the quote form) uses Formspree's official `@formspree/ajax` library, loaded from their CDN at the bottom of `index.html`:
+  ```html
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#quote-form', formId: 'xojozyeo' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+  ```
+  This library owns the quote form's native submit event — clicking that button shows field-level validation errors (`[data-fs-error="name"]` etc.) and a form-level success/error message (`[data-fs-success]` / `[data-fs-error]`) without a page reload. Note its success/error text comes from Formspree itself, so unlike the rest of the site it isn't translated into Spanish/Italian.
 
-1. Go to [formspree.io](https://formspree.io) and create a free account.
-2. Create a new form, give it any name (e.g. "ItaHandyman quote requests"), and set the destination to the email address you want leads sent to.
-3. Formspree will give you a form endpoint that looks like `https://formspree.io/f/abcd1234`. Copy the `abcd1234` part (your form ID).
-4. Open `script.js` in this repo, find this line near the top:
-   ```js
-   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
-   ```
-   Replace `YOUR_FORM_ID` with your actual ID, so it reads e.g. `https://formspree.io/f/abcd1234`.
-5. Commit and push. Formspree's free tier covers 50 submissions a month, which is plenty to start — check their pricing if you outgrow it.
-6. Test it: submit the form yourself once. Formspree requires you to confirm the first submission from a new form (check your email) before it starts forwarding automatically.
+**Confirmed cause of the "Send via Website Form" failure:** testing it returns this exact error from Formspree:
 
-If you skip this step, the form still works fine — it just won't email you a backup copy, only the WhatsApp message will go through.
+> In order to submit via AJAX, you need to set a custom key or reCAPTCHA must be disabled in this form's settings page.
+
+This means your form `xojozyeo` has reCAPTCHA turned on, which blocks JavaScript/AJAX submissions by default. **To fix it**, log into [formspree.io](https://formspree.io), open the form, go to its **Settings** tab, and either:
+- turn **reCAPTCHA off** for this form (simplest — the honeypot field already in the enquiry form gives you basic spam protection instead), or
+- generate an **AJAX key** for the form and pass it as a `data-fs-recaptcha-key` (or per Formspree's current docs) on the quote form.
+
+The plain "Send a website enquiry" section further down the page is unaffected by this — it's a normal HTML POST (full page submission), not AJAX, so reCAPTCHA doesn't block it.
+
+**If submissions still aren't arriving after that, also check:**
+
+1. **The first submission was never confirmed.** Formspree requires you to click a one-time confirmation link before a new form starts forwarding. Submit the form once yourself, then check the inbox of the email address the form is set to deliver to (**and its spam/junk folder**) for an email from Formspree asking you to confirm.
+2. **The form ID doesn't match your account.** Check the endpoint shown in your Formspree dashboard reads `https://formspree.io/f/xojozyeo`. If yours is different, update the `formId` in the `initForm(...)` call above *and* the `action="..."` attribute on the enquiry `<form>` in `index.html` to match, then commit and push.
+
+Formspree's free tier covers 50 submissions a month.
 
 ## Notes
 
