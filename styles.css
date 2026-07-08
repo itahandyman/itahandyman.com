@@ -220,6 +220,7 @@ section{ padding: 88px 0; }
   margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--stone-dim);
 }
 .quote-direct-label{ font-weight: 600; margin-bottom: 12px; }
+.quote-direct-actions{ display:flex; flex-wrap:wrap; gap: 12px; }
 
 .quote-form{
   display:grid; gap: 14px;
@@ -235,6 +236,7 @@ section{ padding: 88px 0; }
   border-color: var(--green); outline: none;
 }
 .quote-form textarea{ resize: vertical; }
+.quote-form-actions{ display:grid; gap: 10px; margin-top: 6px; }
 .quote-status{ font-size: .9rem; color: var(--green); margin: 4px 0 0; min-height: 1.2em; }
 
 /* ============================================
