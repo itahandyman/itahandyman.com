@@ -14,6 +14,8 @@ CNAME           tells GitHub Pages to serve this at itahandyman.com
 
 Everything sits flat in one folder — no subfolders needed. Keep any photos you add here too, right alongside these files.
 
+**After editing `styles.css` or `script.js`,** bump the `?v=2` query string on their `<link>`/`<script>` tags near the top and bottom of `index.html` (e.g. to `?v=3`). Browsers aggressively cache CSS/JS files, so without this, visitors (and you, testing changes) can keep seeing an old cached copy after an update — even after the new file is live on GitHub Pages.
+
 ## 1. Put this on GitHub
 
 1. Create a new repository on GitHub (e.g. `itahandyman-website`). It can be public or private — Pages works either way on a paid plan, but must be **public** on a free plan.
